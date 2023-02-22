@@ -1,0 +1,34 @@
+{
+  "name": "git-smart-commit",
+  "description": "This tool generates smart TODO comments for Git changes to nudge users to document them before commit.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./post-install.js",
+    "uninstall": "rm .git/hooks/pre-commit-msg"
+  },
+  "dependencies": {
+    "gently-copy": "^3.2.0"
+  },
+  "authors": [
+    {
+      "name": "sagar chauhan",
+      "email": "coolsagar005@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagarchauhan005/git-smart-commit.git"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "commit"
+  ],
+  "author": "Sagar Chauhan",
+  "bugs": {
+    "url": "https://github.com/sagarchauhan005/git-smart-commit/issues"
+  },
+  "homepage": "https://github.com/sagarchauhan005/git-smart-commit#readme"
+}
