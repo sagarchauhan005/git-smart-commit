@@ -1,4 +1,4 @@
-# GitHub Actions Serverless CI/CD Pipeline Setup
+# Git Smart Commit
 
 This tool generates smart TODO comments for Git changes to nudge users to document them before commit.
 
@@ -15,7 +15,7 @@ This tool generates smart TODO comments for Git changes to nudge users to docume
 # Post Installation Steps
 
 1. Make any small change in any of your file
-2. ``` git add .```
+2. ```git add .```
 3. ```git commit -m "your message"```
 4. Notice the changes you have made in your files and document them
 5. That's it! Push the changes to your branch.
