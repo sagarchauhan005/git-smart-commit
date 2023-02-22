@@ -12,42 +12,32 @@ const fs = require('fs');
 
 const filesToCopy = ['src/hooks/prepare-commit-msg.sh'];
 //  local directory
-const copyPath = '.git/hooks/prepare-commit-msg';
+const copyPath = '../../.git/hooks/prepare-commit-msg';
 // Moving files to user's local directory
 gentlyCopy(filesToCopy, copyPath, {overwrite: false})
 
 
-function addCustomScript(script, command) {
-    const packageJsonPath = './package.json';
-    fs.readFile(packageJsonPath, 'utf8', (err, data) => {
-        if (err) {
-            throw err;
-        }
+async function addCustomScripts(scripts) {
+    const packageJsonPath = '../../package.json';
 
-        const packageJson = JSON.parse(data);
-        packageJson.scripts[scriptName] = scriptCommand;
-
-        fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2), (err) => {
-            if (err) {
-                throw err;
-            }
-
-            console.log(`Added script '${scriptName}' with command '${scriptCommand}' to package.json`);
-        });
-    });
+    try {
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
+        Object.assign(packageJson.scripts, scripts);
+        fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+        console.log('Added custom scripts to package.json');
+    } catch (err) {
+        console.error('Error adding custom scripts to package.json:', err);
+    }
 }
 
-// add pause command
-const pause_script_name = 'pause-smart-commit';
-const pause_script_command = 'mv .git/hooks/pre-commit-msg .git/hooks/pre-commit-msg.sample';
-addCustomScript(pause_script_name, pause_script_command);
+// Define the scripts to add
+const scripts = {
+    'pause-smart-commit': 'mv .git/hooks/pre-commit-msg .git/hooks/pre-commit-msg.sample',
+    'restart-smart-commit': 'mv .git/hooks/pre-commit-msg.sample .git/hooks/pre-commit-msg',
+    'uninstall-smart-commit': 'rm .git/hooks/pre-commit-msg',
+};
 
-// add restart command
-const restart_script_name = 'restart-smart-commit';
-const restart_script_command = 'mv .git/hooks/pre-commit-msg.sample .git/hooks/pre-commit-msg';
-addCustomScript(restart_script_name, restart_script_command);
-
-// add uninstall command
-const uninstall_script_name = 'uninstall-smart-commit';
-const uninstall_script_command = 'rm .git/hooks/pre-commit-msg';
-addCustomScript(uninstall_script_name, uninstall_script_command);
+// Add the scripts to package.json
+(async () => {
+    await addCustomScripts(scripts);
+})();
