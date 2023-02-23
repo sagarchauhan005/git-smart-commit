@@ -99,6 +99,7 @@ then
 else
     for file in $files
     do
+      supported_file=true;
         # Check file permissions before running sed or git commands
 #        if [ ! -w "$file" ]
 #        then
@@ -144,35 +145,39 @@ else
                 comment_start="\/\/"
                 ;;
             *)
-                echo "Unsupported file type: $file"
+                supported_file=false;
+                echo -e "${MAGENTA}   - INFO: This file is not supported currently to add auto comments due its nature. Please manage it manually....\n ${NC}"
                 continue
                 ;;
         esac
 
-        # Add the comment
-        sed -i "${line_number} {/^\s*${comment_start}\(\(FIX\)\|\(INFO\)\|\(DEBUG\)\)/! {/^\s*${comment_start}\s*TODO:/! s,^,${todo_comment}\n,}}" "$file"
+        if  $supported_file; then
+          # Add the comment
+          sed -i "${line_number} {/^\s*${comment_start}\(\(FIX\)\|\(INFO\)\|\(DEBUG\)\)/! {/^\s*${comment_start}\s*TODO:/! s,^,${todo_comment}\n,}}" "$file"
 
-        #check if the line contains a TODO comment
-        if [ -n "$(sed -n "${line_number}{/^\s*${comment_start}\s*TODO:/p}" "$file")" ]; then
-            has_todo_comment=true
-            echo -e "${ORANGE}   - Please document your changes at line number $line_number. Allowed format => FIX|DEBUG|INFO: <Your comment>\n ${NC}"
-        else
-            # check if the line contains a comment starting with FIX, INFO, or DEBUG
-            comment=$(sed -n "${line_number}{/^\s*${comment_start}\s*\(FIX\|INFO\|DEBUG\):/p}" "$file")
-            if [ -n "$comment" ]; then
-                echo -e "${GREEN}   - Thanks for documenting your changes...${NC}\n"
-            else
-                echo "Please follow this format while documenting your changes, FIX|DEBUG|INFO: <Your comment>"
-            fi
+          #check if the line contains a TODO comment
+          if [ -n "$(sed -n "${line_number}{/^\s*${comment_start}\s*TODO:/p}" "$file")" ]; then
+              has_todo_comment=true
+              echo -e "${ORANGE}   - Please document your changes at line number $line_number. Allowed format => FIX|DEBUG|INFO: <Your comment>\n ${NC}"
+          else
+              # check if the line contains a comment starting with FIX, INFO, or DEBUG
+              comment=$(sed -n "${line_number}{/^\s*${comment_start}\s*\(FIX\|INFO\|DEBUG\):/p}" "$file")
+              if [ -n "$comment" ]; then
+                  echo -e "${GREEN}   - Thanks for documenting your changes...${NC}\n"
+              else
+                  echo "Please follow this format while documenting your changes, FIX|DEBUG|INFO: <Your comment>"
+              fi
+          fi
         fi
     done
+
     # prompt the user to enter a commit message and commit the changes
     if ! $has_todo_comment; then
 
       # Get the commit message from the current commit
        commit_msg_file=$1
        MESSAGE=$(cat "$commit_msg_file")
-       echo "$MESSAGE";
+
       # Check if the commit message matches the expected format
       if ! [[ "$MESSAGE" =~ $COMMIT_FORMAT ]]; then
         echo -e "${RED}\n   Error: Invalid commit message format. Please use the format TEST|FIX|NEW|FEATURE: <Message>.${NC}\n"

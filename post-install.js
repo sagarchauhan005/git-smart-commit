@@ -14,7 +14,7 @@ const filesToCopy = ['src/hooks/prepare-commit-msg.sh'];
 //  local directory
 const copyPath = '../../.git/hooks/prepare-commit-msg';
 // Moving files to user's local directory
-gentlyCopy(filesToCopy, copyPath, {overwrite: false})
+gentlyCopy(filesToCopy, copyPath, {overwrite: true})
 
 
 async function addCustomScripts(scripts) {
@@ -34,6 +34,7 @@ async function addCustomScripts(scripts) {
 const scripts = {
     'pause-smart-commit': 'mv .git/hooks/pre-commit-msg .git/hooks/pre-commit-msg.sample',
     'restart-smart-commit': 'mv .git/hooks/pre-commit-msg.sample .git/hooks/pre-commit-msg',
+    'install-smart-commit': 'mv node_modules/git-smart-commit/src/hooks/prepare-commit-msg.sh .git/hooks/pre-commit-msg',
     'uninstall-smart-commit': 'rm .git/hooks/pre-commit-msg',
 };
 
