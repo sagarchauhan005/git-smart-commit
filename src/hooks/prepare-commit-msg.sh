@@ -19,6 +19,7 @@ ${NC}"
 echo -e "\n  Welcome to Smart Commit!\n"
 echo "  Author: Sagar Chauhan"
 echo -e "  Website: \033[33mhttps://sagarchauhan005.github.io/\033[0m"
+echo -e "  Buy me a Coffee: \033[33mhttps://www.buymeacoffee.com/sagarchauhan005\033[0m"
 echo "  Version: 0.0.1"
 echo "  Description: This tool generates smart TODO comments for Git changes to nudge users to document them before commit."
 
