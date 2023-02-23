@@ -3,7 +3,7 @@
 /**
  * Script to run after npm install
  *
- * Copy selected files to user's directory
+ * Copy selected files to user's directory and perform action
  */
 
 'use strict'

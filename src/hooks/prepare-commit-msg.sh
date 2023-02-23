@@ -23,55 +23,6 @@ echo -e "  Buy me a Coffee: \033[33mhttps://www.buymeacoffee.com/sagarchauhan005
 echo "  Version: 0.0.1"
 echo "  Description: This tool generates smart TODO comments for Git changes to nudge users to document them before commit."
 
-#LOG_FILE="$(dirname "$0")/smart-commit.log"
-# Create log file if it doesn't exist
-#touch "$LOG_FILE"
-# Redirect standard error to log file
-#exec 2>> "$LOG_FILE"
-
-# Check the OS and set package manager
-#if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-#    # Linux OS detected
-#    PKG_MANAGER="apt-get"
-#elif [[ "$OSTYPE" == "darwin"* ]]; then
-#    # MacOS detected
-#    PKG_MANAGER="brew"
-#elif [[ "$OSTYPE" == "cygwin" || "$OSTYPE" == "msys" ]]; then
-#    # Windows OS detected (using Git Bash)
-#    PKG_MANAGER="choco"
-#else
-#    # Unsupported OS
-#    echo "Unsupported operating system."
-#    exit 1
-#fi
-#
-## Check for sed and git
-#if ! command -v sed > /dev/null; then
-#    echo "sed is not installed. Do you want to install sed? (y/n)"
-#    read install_sed
-#    if [ "$install_sed" == "y" ]; then
-#        echo "Installing sed..."
-#        sudo $PKG_MANAGER install sed
-#        echo "sed installed successfully!"
-#    else
-#        echo "sed is required to run this script. Exiting..."
-#        exit 1
-#    fi
-#fi
-#
-#if ! command -v git > /dev/null; then
-#    echo "git is not installed. Do you want to install git? (y/n)"
-#    read install_git
-#    if [ "$install_git" == "y" ]; then
-#        echo "Installing git..."
-#        sudo $PKG_MANAGER install git
-#        echo "git installed successfully!"
-#    else
-#        echo "git is required to run this script. Exiting..."
-#        exit 1
-#    fi
-#fi
-
 
 # Loader
 echo -e "\n";
@@ -88,8 +39,6 @@ echo -e "\n";
 COMMIT_FORMAT="^(TEST|FIX|NEW|FEATURE): .+";
 # get the list of changed files
 files=$(git diff --cached --name-only)
-#echo "Files";
-#echo $files;
 
 # Keep track of whether any files have a TODO comment
 has_todo_comment=false
@@ -100,12 +49,7 @@ then
 else
     for file in $files
     do
-      supported_file=true;
-        # Check file permissions before running sed or git commands
-#        if [ ! -w "$file" ]
-#        then
-#            echo -e "${RED}   - '$file' is not writable. Please check file permissions and try again.${NC}\n"
-#        fi
+        supported_file=true;
 
         echo -e "${GREEN}\n ${i}. Changed File :${NC} $file\n"
         i=$(( i + 1 ))
@@ -113,8 +57,7 @@ else
         diff_output=$(git diff --cached --unified=0 "$file")
         line_number=$(echo "$diff_output" | grep -E "^@@.*\+[0-9]+.*@@" | cut -d "+" -f 2 | cut -d "," -f 1)
         line_number=$(echo "$line_number" | grep -oE '[0-9]+' | sed -n 1p)
-        #extension="${file##*.}"
-        #extension=$(echo "$file" | rev | cut -d. -f1,2 | rev | awk '{print tolower($0)}')
+
         filename=$(basename -- "$file")
         extension=""
         if [[ $filename == *.*.* ]]; then
@@ -122,8 +65,7 @@ else
         else
             extension=$(echo "$filename" | rev | cut -d. -f1 | rev | awk '{print tolower($0)}')
         fi
-#        echo "extension";
-#        echo $extension;
+
         case $extension in
             html)
                 todo_comment="\t\t\t<!--TODO: Add more descriptive comment here. Allowed format => FIX|DEBUG|INFO: Your comment -->"
