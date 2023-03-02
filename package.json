@@ -1,7 +1,7 @@
 {
   "name": "git-smart-commit",
   "description": "This tool generates smart TODO comments for Git changes to nudge users to document them before commit.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

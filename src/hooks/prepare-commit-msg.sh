@@ -129,7 +129,7 @@ else
 
       # Commit the changes with the provided commit message
       echo -e "${GREEN}\n   - All files added and committed to git...${NC}\n"
-      git add . && git commit -m "$MESSAGE" --no-verify
+      echo -e "${GREEN}\n   - Skipping validation...${NC}\n"
     else
         echo -e "${GREEN}   - Please document the updates and then commit again...${NC}\n"
         exit 1;
