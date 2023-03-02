@@ -8,6 +8,8 @@ This tool generates smart TODO comments for Git changes to nudge users to docume
 
 # Working
 
+Click below to watch the video
+
 [![Git Smart Commit](https://img.youtube.com/vi/DFulKPJfwtk/0.jpg)](https://www.youtube.com/watch?v=DFulKPJfwtk)
 
 - Make changes to your code
