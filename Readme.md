@@ -42,6 +42,41 @@ Make sure that your system has all these installed pre-hand.
 4. Notice the changes you have made in your files and document them
 5. That's it! Push the changes to your branch.
 
+# Add-on commands 
+
+I have added some add-on commands that give you full control over this package:
+
+1. *Pause* : Pauses the commit validation until you restart. Good when you don't want to validate something.
+   ```
+    npm run pause-smart-commit
+   ```
+
+2. *Restart* : Restarts the paused smart commit package.
+   ```
+    npm run restart-smart-commit
+   ```
+
+3. *Un-install* : Removes the smart commit validation from git and allow you to work normally.
+   ```
+    npm run uninstall-smart-commit
+   ```
+
+4. *Install* : Installs the smart commit validation back into git
+   ```
+    npm run install-smart-commit
+   ```
+
+## Tested on
+
+1. Linux
+2. Mac
+
+## TODO
+
+1. Test and adapt to windows
+2. Add more file support for comments
+3. Integrate ChatGPT for smart commit message to assist better.
+
 # Author
 
 [Sagar Chauhan](https://twitter.com/sagarchauhan005) works as a Senior Product Manager - Technology at [Greenhonchos](https://www.greenhonchos.com).
